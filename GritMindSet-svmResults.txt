@@ -1,0 +1,1 @@
+average accuracy = 0.91 std. dev = 0.05
