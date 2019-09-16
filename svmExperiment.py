@@ -5,6 +5,7 @@ import operator
 from sklearn import model_selection
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
+from sklearn import svm
 from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import FloatTensorType
 import pickle
@@ -19,7 +20,7 @@ def getData():
     return data_x, data_y
 
 
-def runExperiments():
+def runExperimentsAvgCV():
     model = SVC(gamma='auto')
     X, y = getData()
     kfold = model_selection.StratifiedKFold(
@@ -49,5 +50,20 @@ def runExperiments():
     # https://machinelearningmastery.com/save-load-machine-learning-models-python-scikit-learn/
 
 
+def experimentGridSearch():
+    parameters = {'kernel': ('linear', 'rbf'), 'C': [
+        0.001, 0.01, 0.1, 1, 10], 'gamma': [0.001, 0.01, 0.1, 1]}
+    model = svm.SVC(gamma="scale")
+    gs = model_selection.GridSearchCV(model, parameters, cv=10)
+    X, y = getData()
+    gs.fit(X, y)
+
+    # grid search best results
+    print(gs.best_score_, gs.best_params_)
+    with open('GritMindSet-svmGridSearchResults.txt', 'w') as f:
+        print(gs.best_score_, gs.best_params_, file=f, flush=True)
+
+
 if __name__ == "__main__":
-    runExperiments()
+    # runExperimentsAvgCV()
+    experimentGridSearch()
