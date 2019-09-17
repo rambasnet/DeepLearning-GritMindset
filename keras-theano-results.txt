@@ -1,0 +1,5 @@
+optimizer: adadelta: acc: 62.20 SD: 30.44
+optimizer: adagrad: acc: 82.87 SD: 3.76
+optimizer: adam: acc: 84.82 SD: 3.15
+optimizer: rmsprop: acc: 83.84 SD: 1.92
+optimizer: sgd: acc: 84.16 SD: 1.60
